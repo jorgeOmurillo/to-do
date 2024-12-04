@@ -28,10 +28,24 @@ export default function ToDo() {
     ]);
   };
 
+  const handleOnSaveEditedToDo = ({
+    editingId,
+    editedText,
+  }: {
+    editingId: number;
+    editedText: string;
+  }) => {
+    setToDos(
+      toDos.map((toDo) =>
+        toDo.id === editingId ? { ...toDo, text: editedText } : toDo
+      )
+    );
+  };
+
   return (
     <>
       <ToDoInput onAddToDo={handleOnAddToDo} />
-      <ToDoList toDos={toDos} />
+      <ToDoList toDos={toDos} onSaveEditedToDo={handleOnSaveEditedToDo} />
     </>
   );
 }
