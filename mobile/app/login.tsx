@@ -1,9 +1,11 @@
+import { useSecureStorage } from "@/hooks/useSecureStorage";
 import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { save } = useSecureStorage();
 
   const handleLogin = async () => {
     try {
@@ -15,6 +17,7 @@ export default function Login() {
 
       if (response.ok) {
         const data = await response.json();
+        await save("token", data.token);
         Alert.alert("Success", "Login successful!");
       } else {
         Alert.alert("Error", "Invalid credentials.");
