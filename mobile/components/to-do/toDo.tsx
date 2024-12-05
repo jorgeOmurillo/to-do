@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Button } from "react-native";
 import { ToDoInput } from "@/components/to-do/ToDoInput";
 import { ToDoList } from "@/components/to-do/ToDoList";
 
@@ -50,6 +50,10 @@ export default function ToDo() {
     );
   };
 
+  const handleOnRemoveCompleted = () => {
+    setToDos(toDos.filter((toDo) => !toDo.completed));
+  };
+
   return (
     <>
       <ToDoInput onAddToDo={handleOnAddToDo} />
@@ -58,6 +62,7 @@ export default function ToDo() {
         onToDoCompleted={handleOnToDoCompleted}
         onSaveEditedToDo={handleOnSaveEditedToDo}
       />
+      <Button title="Remove Completed" onPress={handleOnRemoveCompleted} />
     </>
   );
 }
