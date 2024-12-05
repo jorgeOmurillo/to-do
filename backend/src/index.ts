@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import authMiddleware from "./middleware/authMiddleware";
 import mongoose, { ConnectOptions } from "mongoose";
 
-import authRoutes from "./routes/auth";
+import authRoutes from "./routes/authRoutes";
 
 dotenv.config();
 

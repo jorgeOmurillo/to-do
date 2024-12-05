@@ -6,23 +6,27 @@ import User from "../models/User";
 
 const router = express.Router();
 
-const users = [
-  { username: "user1", password: bcrypt.hashSync("password1", 10) },
-  { username: "user2", password: bcrypt.hashSync("password2", 10) },
-];
-
-router.post("/login", (req: any, res: any) => {
+// Login endpoint
+router.post("/login", async (req: any, res: any) => {
   const { username, password } = req.body;
-  const user = users.find((u) => u.username === username);
 
-  if (!user || !bcrypt.compareSync(password, user.password)) {
-    return res.status(401).json({ message: "Invalid credentials" });
+  try {
+    const user = await User.findOne({ username });
+    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid)
+      return res.status(400).json({ message: "Invalid credentials" });
+
+    // Generate a JWT
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET!, {
+      expiresIn: "1h",
+    });
+
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: "Error logging in", error });
   }
-
-  const token = jwt.sign({ username }, process.env.JWT_SECRET!, {
-    expiresIn: "1h",
-  });
-  res.json({ token });
 });
 
 // Registration endpoint
