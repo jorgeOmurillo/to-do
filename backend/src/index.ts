@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import authMiddleware from "./middleware/authMiddleware";
@@ -14,18 +13,19 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Routes
-app.get("/", (req, res) => {
+// Core Routes
+app.get("/health", (req, res) => {
   res.send("Backend is running!");
 });
 
 app.use("/api/auth", authRoutes);
 
-app.get("/api/protected", authMiddleware, (req, res) => {
+// Debugging route
+app.get("/api/debug/protected", authMiddleware, (req, res) => {
   res.json({
-    message: "You have access to this protected route!",
+    message: "This is a protected route!",
     user: (req as any).user,
   });
 });
@@ -40,8 +40,14 @@ app.listen(PORT, () => {
 
 // Start the database
 const startServer = async () => {
+  const mongoUri = process.env.MONGO_URI;
+  if (!mongoUri) {
+    console.error("MONGO_URI is missing!");
+    process.exit(1);
+  }
+
   try {
-    await mongoose.connect(process.env.MONGO_URI!, {
+    await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as ConnectOptions);
