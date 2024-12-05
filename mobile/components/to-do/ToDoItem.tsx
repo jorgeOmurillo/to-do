@@ -9,6 +9,7 @@ type ToDo = {
 
 type Props = {
   item: ToDo;
+  onToDoCompleted: (id: number) => void;
   onSaveEditedToDo: ({
     editingId,
     editedText,
@@ -68,6 +69,9 @@ function ToDoItem(props: Props) {
               Edit
             </Text>
           )}
+          <Text onPress={() => props.onToDoCompleted(props.item.id)}>
+            {"\u2713"}
+          </Text>
         </View>
       </View>
     </View>

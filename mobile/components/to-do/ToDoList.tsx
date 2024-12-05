@@ -10,6 +10,7 @@ type ToDo = {
 
 type Props = {
   toDos: ToDo[];
+  onToDoCompleted: (id: number) => void;
   onSaveEditedToDo: ({
     editingId,
     editedText,
@@ -24,7 +25,11 @@ function ToDoList(props: Props) {
     <FlatList
       data={props.toDos}
       renderItem={({ item }) => (
-        <ToDoItem item={item} onSaveEditedToDo={props.onSaveEditedToDo} />
+        <ToDoItem
+          item={item}
+          onToDoCompleted={props.onToDoCompleted}
+          onSaveEditedToDo={props.onSaveEditedToDo}
+        />
       )}
     />
   );

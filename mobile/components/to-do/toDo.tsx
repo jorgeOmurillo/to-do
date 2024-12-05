@@ -28,6 +28,14 @@ export default function ToDo() {
     ]);
   };
 
+  const handleOnToDoCompleted = (id: number) => {
+    setToDos(
+      toDos.map((toDo) =>
+        toDo.id === id ? { ...toDo, completed: !toDo.completed } : toDo
+      )
+    );
+  };
+
   const handleOnSaveEditedToDo = ({
     editingId,
     editedText,
@@ -45,7 +53,11 @@ export default function ToDo() {
   return (
     <>
       <ToDoInput onAddToDo={handleOnAddToDo} />
-      <ToDoList toDos={toDos} onSaveEditedToDo={handleOnSaveEditedToDo} />
+      <ToDoList
+        toDos={toDos}
+        onToDoCompleted={handleOnToDoCompleted}
+        onSaveEditedToDo={handleOnSaveEditedToDo}
+      />
     </>
   );
 }
