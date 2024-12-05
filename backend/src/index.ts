@@ -6,6 +6,7 @@ import authMiddleware from "./middleware/authMiddleware";
 import mongoose, { ConnectOptions } from "mongoose";
 
 import authRoutes from "./routes/authRoutes";
+import toDoRoutes from "./routes/toDoRoutes";
 
 dotenv.config();
 
@@ -28,6 +29,8 @@ app.get("/api/protected", authMiddleware, (req, res) => {
     user: (req as any).user,
   });
 });
+
+app.use("/api", toDoRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
