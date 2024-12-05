@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+import authMiddleware from "./middleware/authMiddleware";
 
 import authRoutes from "./routes/auth";
 
@@ -19,6 +20,13 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+
+app.get("/api/protected", authMiddleware, (req, res) => {
+  res.json({
+    message: "You have access to this protected route!",
+    user: (req as any).user,
+  });
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
