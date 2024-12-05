@@ -31,7 +31,7 @@ router.get("/todos", authMiddleware, async (req, res) => {
 });
 
 // Update a toDo
-router.put("/todos/:id", authMiddleware, async (req: any, res: any) => {
+router.put("/todo/:id", authMiddleware, async (req: any, res: any) => {
   const { id } = req.params;
   const { title, completed } = req.body;
 
@@ -50,7 +50,7 @@ router.put("/todos/:id", authMiddleware, async (req: any, res: any) => {
 });
 
 // Delete a toDo
-router.delete("/todos/:id", authMiddleware, async (req: any, res: any) => {
+router.delete("/todo/:id", authMiddleware, async (req: any, res: any) => {
   const { id } = req.params;
 
   try {
