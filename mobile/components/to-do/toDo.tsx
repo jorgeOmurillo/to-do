@@ -9,8 +9,11 @@ type ToDo = {
   completed: boolean;
 };
 
+type ToDosFilter = "all" | "completed" | "incomplete";
+
 export default function ToDo() {
   const [toDos, setToDos] = useState<ToDo[]>([]);
+  const [toDosFilter, setToDosFilter] = useState<ToDosFilter>("all");
 
   const handleOnAddToDo = (toDoInput: string) => {
     const duplicateToDo = toDos.some(
@@ -54,15 +57,30 @@ export default function ToDo() {
     setToDos(toDos.filter((toDo) => !toDo.completed));
   };
 
+  const filteredToDos = toDos.filter((toDo) => {
+    if (toDosFilter === "completed") {
+      return toDo.completed;
+    }
+
+    if (toDosFilter === "incomplete") {
+      return !toDo.completed;
+    }
+
+    return true;
+  });
+
   return (
     <>
       <ToDoInput onAddToDo={handleOnAddToDo} />
       <ToDoList
-        toDos={toDos}
+        toDos={filteredToDos}
         onToDoCompleted={handleOnToDoCompleted}
         onSaveEditedToDo={handleOnSaveEditedToDo}
       />
       <Button title="Remove Completed" onPress={handleOnRemoveCompleted} />
+      <Button title="All" onPress={() => setToDosFilter("all")} />
+      <Button title="Completed" onPress={() => setToDosFilter("completed")} />
+      <Button title="Incomplete" onPress={() => setToDosFilter("incomplete")} />
     </>
   );
 }
