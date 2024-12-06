@@ -7,11 +7,13 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Login from "./login";
+import Register from "./register";
+import { useSecureStorage } from "@/hooks/useSecureStorage";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -21,7 +23,18 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
-  const loggedIn = false;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { getValueFor } = useSecureStorage();
+
+  useEffect(() => {
+    async function checkToken() {
+      const token = await getValueFor("token");
+      if (token) {
+        setIsLoggedIn(true);
+      }
+    }
+    checkToken();
+  }, []);
 
   useEffect(() => {
     if (loaded) {
@@ -33,8 +46,8 @@ export default function RootLayout() {
     return null;
   }
 
-  if (!loggedIn) {
-    return <Login />;
+  if (!isLoggedIn) {
+    return <Register />;
   }
 
   return (
