@@ -48,7 +48,6 @@ export function useSession() {
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [token, setToken] = useState<string | null>(null);
-  // deleteItem("token");
 
   useEffect(() => {
     async function checkToken() {
@@ -78,13 +77,9 @@ export function SessionProvider({ children }: PropsWithChildren) {
       if (response.ok) {
         const data = await response.json();
         await saveItem("token", data.token);
-        // setToken(data.token);
-      } else {
-        // Alert.alert("Error", "Invalid credentials.");
       }
     } catch (error) {
       console.error("Login error:", error);
-      // Alert.alert("Error", "Something went wrong.");
     }
   };
 
@@ -101,19 +96,14 @@ export function SessionProvider({ children }: PropsWithChildren) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-      console.log("register respuesta ", JSON.stringify(response));
 
       if (response.ok) {
         const data = await response.json();
         await saveItem("token", data.token);
-        // setToken(data.token);
-        // Alert.alert("Success", "Registration successful!");
       } else {
-        // Alert.alert("Error", "Invalid credentials.");
       }
     } catch (error) {
       console.error("Registration error:", error);
-      // Alert.alert("Error", "Something went wrong.");
     }
   };
 

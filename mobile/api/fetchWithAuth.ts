@@ -16,10 +16,6 @@ export async function fetchWithAuth(
       "Content-Type": "application/json",
     };
 
-    console.log("the request --->>> ", `${API_URL}${endpoint}`, {
-      ...options,
-      headers,
-    });
     const response = await fetch(`${API_URL}${endpoint}`, {
       ...options,
       headers,
