@@ -30,3 +30,9 @@ export async function deleteToDo(id: string) {
     method: "DELETE",
   });
 }
+
+export async function deleteCompletedToDos() {
+  return await fetchWithAuth(`/todos/completed`, {
+    method: "DELETE",
+  });
+}

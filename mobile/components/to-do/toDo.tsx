@@ -14,7 +14,14 @@ type ToDo = {
 type ToDosFilter = "all" | "completed" | "incomplete";
 
 export default function ToDo() {
-  const { addToDo, editToDo, fetchToDos, removeToDo, toDos } = useTodos();
+  const {
+    addToDo,
+    editToDo,
+    fetchToDos,
+    removeToDo,
+    removeCompletedToDos,
+    toDos,
+  } = useTodos();
   const [toDosFilter, setToDosFilter] = useState<ToDosFilter>("all");
 
   useEffect(() => {
@@ -51,7 +58,7 @@ export default function ToDo() {
   };
 
   const handleOnRemoveCompleted = () => {
-    // setToDos(toDos.filter((toDo) => !toDo.completed));
+    removeCompletedToDos();
   };
 
   const filteredToDos = toDos.filter((toDo) => {

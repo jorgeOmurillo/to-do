@@ -62,4 +62,26 @@ router.delete("/todo/:id", authMiddleware, async (req: any, res: any) => {
   }
 });
 
+// Delete all completed toDos
+router.delete(
+  "/todos/completed",
+  authMiddleware,
+  async (req: any, res: any) => {
+    const userId = req.user._id;
+
+    try {
+      const result = await ToDo.deleteMany({ userId, completed: true });
+
+      res.json({
+        message: "Completed To-Dos deleted successfully",
+        deletedCount: result.deletedCount,
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error deleting completed To-Dos", error });
+    }
+  }
+);
+
 export default router;

@@ -4,6 +4,7 @@ import {
   createToDo,
   updateToDo,
   deleteToDo,
+  deleteCompletedToDos,
 } from "@/api/todoService";
 
 export type ToDo = {
@@ -19,6 +20,7 @@ type ToDoContextType = {
   addToDo: (title: string) => Promise<void>;
   editToDo: (id: string, updates: Partial<ToDo>) => Promise<void>;
   removeToDo: (id: string) => Promise<void>;
+  removeCompletedToDos: () => Promise<void>;
 };
 
 const ToDoContext = createContext<ToDoContextType | undefined>(undefined);
@@ -66,9 +68,25 @@ export const ToDoProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const removeCompletedToDos = async () => {
+    try {
+      await deleteCompletedToDos();
+      setToDos((prev) => prev.filter((toDo) => !toDo.completed));
+    } catch (error) {
+      console.error("Error removing to-do:", error);
+    }
+  };
+
   return (
     <ToDoContext.Provider
-      value={{ toDos, fetchToDos, addToDo, editToDo, removeToDo }}
+      value={{
+        toDos,
+        fetchToDos,
+        addToDo,
+        editToDo,
+        removeToDo,
+        removeCompletedToDos,
+      }}
     >
       {children}
     </ToDoContext.Provider>
