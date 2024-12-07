@@ -14,8 +14,7 @@ type ToDo = {
 type ToDosFilter = "all" | "completed" | "incomplete";
 
 export default function ToDo() {
-  const { addToDo, editToDo, fetchToDos, removeCompletedToDos, toDos } =
-    useTodos();
+  const { addToDo, fetchToDos, removeCompletedToDos, toDos } = useTodos();
   const [toDosFilter, setToDosFilter] = useState<ToDosFilter>("all");
 
   useEffect(() => {
@@ -33,18 +32,6 @@ export default function ToDo() {
     }
 
     addToDo(toDoInput);
-  };
-
-  const handleOnSaveEditedToDo = ({
-    editingId,
-    editedText,
-    editedCompleted,
-  }: {
-    editingId: string;
-    editedText?: string;
-    editedCompleted?: boolean;
-  }) => {
-    editToDo(editingId, { title: editedText, completed: editedCompleted });
   };
 
   const handleOnRemoveCompleted = () => {
@@ -66,10 +53,7 @@ export default function ToDo() {
   return (
     <>
       <ToDoInput onAddToDo={handleOnAddToDo} />
-      <ToDoList
-        toDos={filteredToDos}
-        onSaveEditedToDo={handleOnSaveEditedToDo}
-      />
+      <ToDoList toDos={filteredToDos} />
       <Button title="Remove Completed" onPress={handleOnRemoveCompleted} />
       <Button title="All" onPress={() => setToDosFilter("all")} />
       <Button title="Completed" onPress={() => setToDosFilter("completed")} />

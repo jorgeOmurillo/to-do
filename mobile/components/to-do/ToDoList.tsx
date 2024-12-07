@@ -11,15 +11,6 @@ type ToDo = {
 
 type Props = {
   toDos: ToDo[];
-  onSaveEditedToDo: ({
-    editingId,
-    editedText,
-    editedCompleted,
-  }: {
-    editingId: string;
-    editedText?: string;
-    editedCompleted?: boolean;
-  }) => void;
 };
 
 function ToDoList(props: Props) {
@@ -27,9 +18,7 @@ function ToDoList(props: Props) {
     <FlatList
       data={props.toDos}
       keyExtractor={(item) => `${item._id}`}
-      renderItem={({ item }) => (
-        <ToDoItem item={item} onSaveEditedToDo={props.onSaveEditedToDo} />
-      )}
+      renderItem={({ item }) => <ToDoItem item={item} />}
     />
   );
 }

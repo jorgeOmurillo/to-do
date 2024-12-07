@@ -12,21 +12,12 @@ type ToDo = {
 
 type Props = {
   item: ToDo;
-  onSaveEditedToDo: ({
-    editingId,
-    editedText,
-    editedCompleted,
-  }: {
-    editingId: string;
-    editedText?: string;
-    editedCompleted?: boolean;
-  }) => void;
 };
 
 function ToDoItem(props: Props) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editedText, setEditedText] = useState("");
-  const { removeToDo } = useTodos();
+  const { editToDo, removeToDo } = useTodos();
 
   return (
     <View style={styles.container}>
@@ -64,10 +55,7 @@ function ToDoItem(props: Props) {
               ellipsizeMode="clip"
               numberOfLines={1}
               onPress={() => {
-                props.onSaveEditedToDo({
-                  editingId: props.item._id,
-                  editedText,
-                });
+                editToDo(props.item._id, { title: editedText });
                 setEditedText("");
                 setEditingId(null);
               }}
@@ -86,10 +74,7 @@ function ToDoItem(props: Props) {
           )}
           <Text
             onPress={() => {
-              props.onSaveEditedToDo({
-                editingId: props.item._id,
-                editedCompleted: !props.item.completed,
-              });
+              editToDo(props.item._id, { completed: !props.item.completed });
             }}
           >
             {"\u2713"}
