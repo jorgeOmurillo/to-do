@@ -19,7 +19,7 @@ export async function updateToDo(
   updates: Partial<{ title: string; completed: boolean }>
 ) {
   return await fetchWithAuth(`/todo/${id}`, {
-    method: "PATCH",
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updates),
   });

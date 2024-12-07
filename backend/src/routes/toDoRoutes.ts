@@ -33,14 +33,13 @@ router.get("/todos", authMiddleware, async (req, res) => {
 // Update a toDo
 router.put("/todo/:id", authMiddleware, async (req: any, res: any) => {
   const { id } = req.params;
-  const { title, completed } = req.body;
+
+  const updates = req.body;
 
   try {
-    const updatedToDo = await ToDo.findByIdAndUpdate(
-      id,
-      { title, completed },
-      { new: true }
-    );
+    const updatedToDo = await ToDo.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
     if (!updatedToDo)
       return res.status(404).json({ message: "To-Do not found" });
     res.json(updatedToDo);

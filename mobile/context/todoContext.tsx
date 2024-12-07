@@ -7,7 +7,7 @@ import {
 } from "@/api/todoService";
 
 export type ToDo = {
-  id: string;
+  _id: string;
   description: string;
   title: string;
   completed: boolean;
@@ -50,7 +50,7 @@ export const ToDoProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const updatedToDo = await updateToDo(id, updates);
       setToDos((prev) =>
-        prev.map((toDo) => (toDo.id === id ? updatedToDo : toDo))
+        prev.map((toDo) => (toDo._id === id ? updatedToDo : toDo))
       );
     } catch (error) {
       console.error("Error updating to-do:", error);
@@ -60,7 +60,7 @@ export const ToDoProvider: React.FC<{ children: React.ReactNode }> = ({
   const removeToDo = async (id: string) => {
     try {
       await deleteToDo(id);
-      setToDos((prev) => prev.filter((toDo) => toDo.id !== id));
+      setToDos((prev) => prev.filter((toDo) => toDo._id !== id));
     } catch (error) {
       console.error("Error removing to-do:", error);
     }

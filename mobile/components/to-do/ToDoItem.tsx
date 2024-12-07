@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Text, TextInput, StyleSheet, View } from "react-native";
 
 type ToDo = {
-  id: string;
+  _id: string;
   description: string;
   title: string;
   completed: boolean;
@@ -10,13 +10,15 @@ type ToDo = {
 
 type Props = {
   item: ToDo;
-  onToDoCompleted: (id: string) => void;
+  onToDoCompleted: (_id: string) => void;
   onSaveEditedToDo: ({
     editingId,
     editedText,
+    editedCompleted,
   }: {
     editingId: string;
-    editedText: string;
+    editedText?: string;
+    editedCompleted?: boolean;
   }) => void;
 };
 
@@ -27,7 +29,7 @@ function ToDoItem(props: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.toDoItemContainer}>
-        {editingId === props.item.id ? (
+        {editingId === props.item._id ? (
           <TextInput
             numberOfLines={1}
             style={styles.textInput}
@@ -48,12 +50,15 @@ function ToDoItem(props: Props) {
           </Text>
         )}
         <View style={styles.toDoButtons}>
-          {editingId === props.item.id ? (
+          {editingId === props.item._id ? (
             <Text
               ellipsizeMode="clip"
               numberOfLines={1}
               onPress={() => {
-                props.onSaveEditedToDo({ editingId, editedText });
+                props.onSaveEditedToDo({
+                  editingId: props.item._id,
+                  editedText,
+                });
                 setEditedText("");
                 setEditingId(null);
               }}
@@ -63,14 +68,21 @@ function ToDoItem(props: Props) {
           ) : (
             <Text
               onPress={() => {
-                setEditingId(props.item.id);
+                setEditingId(props.item._id);
                 setEditedText(props.item.title);
               }}
             >
               Edit
             </Text>
           )}
-          <Text onPress={() => props.onToDoCompleted(props.item.id)}>
+          <Text
+            onPress={() => {
+              props.onSaveEditedToDo({
+                editingId: props.item._id,
+                editedCompleted: !props.item.completed,
+              });
+            }}
+          >
             {"\u2713"}
           </Text>
         </View>

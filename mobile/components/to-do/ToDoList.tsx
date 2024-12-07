@@ -15,9 +15,11 @@ type Props = {
   onSaveEditedToDo: ({
     editingId,
     editedText,
+    editedCompleted,
   }: {
     editingId: string;
-    editedText: string;
+    editedText?: string;
+    editedCompleted?: boolean;
   }) => void;
 };
 

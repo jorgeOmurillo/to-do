@@ -5,7 +5,7 @@ import { ToDoList } from "@/components/to-do/ToDoList";
 import { useTodos } from "@/context/todoContext";
 
 type ToDo = {
-  id: string;
+  _id: string;
   description: string;
   title: string;
   completed: boolean;
@@ -34,18 +34,20 @@ export default function ToDo() {
     addToDo(toDoInput);
   };
 
-  const handleOnToDoCompleted = (id: string) => {
-    removeToDo(id);
+  const handleOnToDoCompleted = (_id: string) => {
+    removeToDo(_id);
   };
 
   const handleOnSaveEditedToDo = ({
     editingId,
     editedText,
+    editedCompleted,
   }: {
     editingId: string;
-    editedText: string;
+    editedText?: string;
+    editedCompleted?: boolean;
   }) => {
-    editToDo(editingId, { title: editedText });
+    editToDo(editingId, { title: editedText, completed: editedCompleted });
   };
 
   const handleOnRemoveCompleted = () => {
