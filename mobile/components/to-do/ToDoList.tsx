@@ -3,7 +3,7 @@ import { FlatList } from "react-native";
 import { ToDoItem } from "./ToDoItem";
 
 type ToDo = {
-  id: string;
+  _id: string;
   description: string;
   title: string;
   completed: boolean;
@@ -11,7 +11,6 @@ type ToDo = {
 
 type Props = {
   toDos: ToDo[];
-  onToDoCompleted: (id: number) => void;
   onSaveEditedToDo: ({
     editingId,
     editedText,
@@ -28,11 +27,7 @@ function ToDoList(props: Props) {
     <FlatList
       data={props.toDos}
       renderItem={({ item }) => (
-        <ToDoItem
-          item={item}
-          onToDoCompleted={props.onToDoCompleted}
-          onSaveEditedToDo={props.onSaveEditedToDo}
-        />
+        <ToDoItem item={item} onSaveEditedToDo={props.onSaveEditedToDo} />
       )}
     />
   );

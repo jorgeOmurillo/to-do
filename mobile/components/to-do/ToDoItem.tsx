@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Text, TextInput, StyleSheet, View } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useTodos } from "@/context/todoContext";
 
 type ToDo = {
   _id: string;
@@ -10,7 +12,6 @@ type ToDo = {
 
 type Props = {
   item: ToDo;
-  onToDoCompleted: (_id: string) => void;
   onSaveEditedToDo: ({
     editingId,
     editedText,
@@ -25,6 +26,7 @@ type Props = {
 function ToDoItem(props: Props) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editedText, setEditedText] = useState("");
+  const { removeToDo } = useTodos();
 
   return (
     <View style={styles.container}>
@@ -50,6 +52,13 @@ function ToDoItem(props: Props) {
           </Text>
         )}
         <View style={styles.toDoButtons}>
+          <FontAwesome.Button
+            name="trash"
+            backgroundColor="black"
+            size={20}
+            onPress={() => removeToDo(props.item._id)}
+          />
+
           {editingId === props.item._id ? (
             <Text
               ellipsizeMode="clip"
