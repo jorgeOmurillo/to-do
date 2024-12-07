@@ -1,5 +1,6 @@
 import { Redirect, Slot } from "expo-router";
 import { useSession } from "@/context";
+import { ToDoProvider } from "@/context/todoContext";
 
 export default function AppLayout() {
   const { token } = useSession();
@@ -8,5 +9,9 @@ export default function AppLayout() {
     return <Redirect href="/login" />;
   }
 
-  return <Slot />;
+  return (
+    <ToDoProvider>
+      <Slot />
+    </ToDoProvider>
+  );
 }

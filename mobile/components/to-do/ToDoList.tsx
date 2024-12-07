@@ -3,8 +3,9 @@ import { FlatList } from "react-native";
 import { ToDoItem } from "./ToDoItem";
 
 type ToDo = {
-  id: number;
-  text: string;
+  id: string;
+  description: string;
+  title: string;
   completed: boolean;
 };
 
@@ -15,7 +16,7 @@ type Props = {
     editingId,
     editedText,
   }: {
-    editingId: number;
+    editingId: string;
     editedText: string;
   }) => void;
 };

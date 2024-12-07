@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Text, TextInput, StyleSheet, View } from "react-native";
 
 type ToDo = {
-  id: number;
-  text: string;
+  id: string;
+  description: string;
+  title: string;
   completed: boolean;
 };
 
@@ -14,13 +15,13 @@ type Props = {
     editingId,
     editedText,
   }: {
-    editingId: number;
+    editingId: string;
     editedText: string;
   }) => void;
 };
 
 function ToDoItem(props: Props) {
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [editedText, setEditedText] = useState("");
 
   return (

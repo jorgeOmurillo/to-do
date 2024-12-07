@@ -8,6 +8,7 @@ import {
 
 export type ToDo = {
   id: string;
+  description: string;
   title: string;
   completed: boolean;
 };

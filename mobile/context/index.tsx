@@ -75,7 +75,6 @@ export function SessionProvider({ children }: PropsWithChildren) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-      console.log("la respuestta ", JSON.stringify(response));
 
       if (response.ok) {
         const data = await response.json();

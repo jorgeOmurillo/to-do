@@ -1,23 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Button } from "react-native";
 import { ToDoInput } from "@/components/to-do/ToDoInput";
 import { ToDoList } from "@/components/to-do/ToDoList";
+import { useTodos } from "@/context/todoContext";
 
 type ToDo = {
-  id: number;
-  text: string;
+  id: string;
+  description: string;
+  title: string;
   completed: boolean;
 };
 
 type ToDosFilter = "all" | "completed" | "incomplete";
 
 export default function ToDo() {
-  const [toDos, setToDos] = useState<ToDo[]>([]);
+  const { addToDo, editToDo, fetchToDos, removeToDo, toDos } = useTodos();
   const [toDosFilter, setToDosFilter] = useState<ToDosFilter>("all");
+
+  useEffect(() => {
+    fetchToDos();
+  }, []);
 
   const handleOnAddToDo = (toDoInput: string) => {
     const duplicateToDo = toDos.some(
-      (value) => toDoInput.trim() === value.text
+      (value) => toDoInput.trim() === value.title
     );
 
     if (duplicateToDo) {
@@ -25,36 +31,25 @@ export default function ToDo() {
       return;
     }
 
-    setToDos([
-      { id: Date.now(), text: toDoInput.trim(), completed: false },
-      ...toDos,
-    ]);
+    addToDo(toDoInput);
   };
 
-  const handleOnToDoCompleted = (id: number) => {
-    setToDos(
-      toDos.map((toDo) =>
-        toDo.id === id ? { ...toDo, completed: !toDo.completed } : toDo
-      )
-    );
+  const handleOnToDoCompleted = (id: string) => {
+    removeToDo(id);
   };
 
   const handleOnSaveEditedToDo = ({
     editingId,
     editedText,
   }: {
-    editingId: number;
+    editingId: string;
     editedText: string;
   }) => {
-    setToDos(
-      toDos.map((toDo) =>
-        toDo.id === editingId ? { ...toDo, text: editedText } : toDo
-      )
-    );
+    editToDo(editingId, { title: editedText });
   };
 
   const handleOnRemoveCompleted = () => {
-    setToDos(toDos.filter((toDo) => !toDo.completed));
+    // setToDos(toDos.filter((toDo) => !toDo.completed));
   };
 
   const filteredToDos = toDos.filter((toDo) => {
