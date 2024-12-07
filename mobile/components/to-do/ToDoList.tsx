@@ -26,6 +26,7 @@ function ToDoList(props: Props) {
   return (
     <FlatList
       data={props.toDos}
+      keyExtractor={(item) => `${item._id}`}
       renderItem={({ item }) => (
         <ToDoItem item={item} onSaveEditedToDo={props.onSaveEditedToDo} />
       )}
