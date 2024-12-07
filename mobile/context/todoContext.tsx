@@ -29,25 +29,41 @@ export const ToDoProvider: React.FC<{ children: React.ReactNode }> = ({
   const [toDos, setToDos] = useState<ToDo[]>([]);
 
   const fetchToDos = async () => {
-    const data = await getToDos();
-    setToDos(data);
+    try {
+      const data = await getToDos();
+      setToDos(data);
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
   };
 
   const addToDo = async (title: string) => {
-    const newToDo = await createToDo(title);
-    setToDos((prev) => [...prev, newToDo]);
+    try {
+      const newToDo = await createToDo(title);
+      setToDos((prev) => [...prev, newToDo]);
+    } catch (error) {
+      console.error("Error adding to-do:", error);
+    }
   };
 
   const editToDo = async (id: string, updates: Partial<ToDo>) => {
-    const updatedToDo = await updateToDo(id, updates);
-    setToDos((prev) =>
-      prev.map((toDo) => (toDo.id === id ? updatedToDo : toDo))
-    );
+    try {
+      const updatedToDo = await updateToDo(id, updates);
+      setToDos((prev) =>
+        prev.map((toDo) => (toDo.id === id ? updatedToDo : toDo))
+      );
+    } catch (error) {
+      console.error("Error updating to-do:", error);
+    }
   };
 
   const removeToDo = async (id: string) => {
-    await deleteToDo(id);
-    setToDos((prev) => prev.filter((toDo) => toDo.id !== id));
+    try {
+      await deleteToDo(id);
+      setToDos((prev) => prev.filter((toDo) => toDo.id !== id));
+    } catch (error) {
+      console.error("Error removing to-do:", error);
+    }
   };
 
   return (

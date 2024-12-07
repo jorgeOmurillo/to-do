@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useSecureStorage } from "@/hooks/useSecureStorage";
+import { getValueFor, saveItem } from "@/utils/secureStorage";
 
 const AuthContext = createContext<{
   logIn: ({
@@ -48,7 +48,6 @@ export function useSession() {
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [token, setToken] = useState<string | null>(null);
-  const { deleteItem, getValueFor, saveItem } = useSecureStorage();
   // deleteItem("token");
 
   useEffect(() => {

@@ -10,7 +10,7 @@ type ToDo = {
 
 type Props = {
   item: ToDo;
-  onToDoCompleted: (id: number) => void;
+  onToDoCompleted: (id: string) => void;
   onSaveEditedToDo: ({
     editingId,
     editedText,
@@ -44,7 +44,7 @@ function ToDoItem(props: Props) {
               paddingRight: 10,
             }}
           >
-            {props.item.text}
+            {props.item.title}
           </Text>
         )}
         <View style={styles.toDoButtons}>
@@ -64,7 +64,7 @@ function ToDoItem(props: Props) {
             <Text
               onPress={() => {
                 setEditingId(props.item.id);
-                setEditedText(props.item.text);
+                setEditedText(props.item.title);
               }}
             >
               Edit

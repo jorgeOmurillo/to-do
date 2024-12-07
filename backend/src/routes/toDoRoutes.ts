@@ -6,11 +6,11 @@ const router = express.Router();
 
 // Create a toDo
 router.post("/todos", authMiddleware, async (req, res) => {
-  const { title } = req.body;
+  const { title, description } = req.body;
   const userId = (req as any).user._id;
 
   try {
-    const newToDo = new ToDo({ userId, title });
+    const newToDo = new ToDo({ userId, title, description });
     await newToDo.save();
     res.status(201).json(newToDo);
   } catch (error) {
