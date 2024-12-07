@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getValueFor, saveItem } from "@/utils/secureStorage";
+import { deleteItem, getValueFor, saveItem } from "@/utils/secureStorage";
 
 const AuthContext = createContext<{
   logIn: ({
@@ -81,6 +81,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       if (response.ok) {
         const data = await response.json();
         await saveItem("token", data.token);
+        setToken(data.token);
       }
       setIsLoading(false);
     } catch (error) {
@@ -106,6 +107,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       if (response.ok) {
         const data = await response.json();
         await saveItem("token", data.token);
+        setToken(data.token);
       }
       setIsLoading(false);
     } catch (error) {
@@ -113,7 +115,15 @@ export function SessionProvider({ children }: PropsWithChildren) {
     }
   };
 
-  function handleLogout() {}
+  const handleLogout = async () => {
+    try {
+      setIsLoading(true);
+      await deleteItem("token");
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Token deletion error:", error);
+    }
+  };
 
   return (
     <AuthContext.Provider
