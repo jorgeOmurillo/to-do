@@ -1,31 +1,16 @@
-import { useSecureStorage } from "@/hooks/useSecureStorage";
 import { useState } from "react";
+import { router } from "expo-router";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { useSession } from "@/context";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { save } = useSecureStorage();
+  const { register } = useSession();
 
-  const handleRegister = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        await save("token", data.token);
-        Alert.alert("Success", "Registration successful!");
-      } else {
-        Alert.alert("Error", "Invalid credentials.");
-      }
-    } catch (error) {
-      console.error("Registration error:", error);
-      Alert.alert("Error", "Something went wrong.");
-    }
+  const handleRegister = () => {
+    register({ username, password });
+    router.replace("/(app)/(tabs)");
   };
 
   return (

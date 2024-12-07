@@ -1,31 +1,16 @@
-import { useSecureStorage } from "@/hooks/useSecureStorage";
 import { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { Link, router } from "expo-router";
+import { useSession } from "@/context";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { save } = useSecureStorage();
+  const { logIn } = useSession();
 
   const handleLogin = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        await save("token", data.token);
-        Alert.alert("Success", "Login successful!");
-      } else {
-        Alert.alert("Error", "Invalid credentials.");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      Alert.alert("Error", "Something went wrong.");
-    }
+    logIn({ username, password });
+    router.replace("/(app)/(tabs)");
   };
 
   return (
@@ -34,6 +19,7 @@ export default function Login() {
       <TextInput
         style={styles.input}
         placeholder="Username"
+        autoCapitalize="none"
         value={username}
         onChangeText={setUsername}
       />
@@ -45,6 +31,7 @@ export default function Login() {
         onChangeText={setPassword}
       />
       <Button title="Login" onPress={handleLogin} />
+      <Link href="/register">Register</Link>
     </View>
   );
 }

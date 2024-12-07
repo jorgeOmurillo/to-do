@@ -1,9 +1,17 @@
 import * as SecureStore from "expo-secure-store";
 
 function useSecureStorage() {
-  async function save(key: any, value: any) {
+  async function saveItem(key: any, value: any) {
     try {
       await SecureStore.setItemAsync(key, value);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async function deleteItem(key: any) {
+    try {
+      await SecureStore.deleteItemAsync(key);
     } catch (e) {
       throw e;
     }
@@ -19,7 +27,8 @@ function useSecureStorage() {
 
   return {
     getValueFor,
-    save,
+    deleteItem,
+    saveItem,
   };
 }
 
