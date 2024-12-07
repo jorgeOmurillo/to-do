@@ -25,13 +25,13 @@ const AuthContext = createContext<{
 
   logOut: () => void;
   token: string | null;
-  // isLoading: boolean;
+  isLoading: boolean;
 }>({
   logIn: () => null,
   register: () => null,
   logOut: () => {},
   token: null,
-  // isLoading: false,
+  isLoading: false,
 });
 
 // This hook can be used to access the user info.
@@ -47,14 +47,17 @@ export function useSession() {
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
+  const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     async function checkToken() {
+      setIsLoading(true);
       const token = await getValueFor("token");
       if (token) {
         setToken(token);
       }
+      setIsLoading(false);
     }
 
     checkToken();
@@ -68,6 +71,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
     password: string;
   }) => {
     try {
+      setIsLoading(true);
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,6 +82,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
         const data = await response.json();
         await saveItem("token", data.token);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -91,6 +96,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
     password: string;
   }) => {
     try {
+      setIsLoading(true);
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -100,8 +106,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
       if (response.ok) {
         const data = await response.json();
         await saveItem("token", data.token);
-      } else {
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Registration error:", error);
     }
@@ -115,8 +121,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
         logIn: handleLogin,
         register: handleRegister,
         logOut: handleLogout,
+        isLoading,
         token,
-        // isLoading,
       }}
     >
       {children}
