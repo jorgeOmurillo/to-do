@@ -9,8 +9,12 @@ export default function Login() {
   const { logIn } = useSession();
 
   const handleLogin = async () => {
-    logIn({ username, password });
-    router.replace("/(app)/(tabs)");
+    try {
+      logIn({ username, password });
+      router.replace("/(app)/(tabs)");
+    } catch (error) {
+      console.error("Login error: ", error);
+    }
   };
 
   return (

@@ -119,6 +119,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
     try {
       setIsLoading(true);
       await deleteItem("token");
+      setToken(null);
       setIsLoading(false);
     } catch (error) {
       console.log("Token deletion error:", error);
