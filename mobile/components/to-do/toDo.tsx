@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Button } from "react-native";
+import { Alert, Button, View } from "react-native";
 import { ToDoInput } from "@/components/to-do/ToDoInput";
 import { ToDoList } from "@/components/to-do/ToDoList";
 import { useTodos } from "@/context/todoContext";
@@ -51,13 +51,20 @@ export default function ToDo() {
   });
 
   return (
-    <>
-      <ToDoInput onAddToDo={handleOnAddToDo} />
-      <ToDoList toDos={filteredToDos} />
-      <Button title="Remove Completed" onPress={handleOnRemoveCompleted} />
-      <Button title="All" onPress={() => setToDosFilter("all")} />
-      <Button title="Completed" onPress={() => setToDosFilter("completed")} />
-      <Button title="Incomplete" onPress={() => setToDosFilter("incomplete")} />
-    </>
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <ToDoInput onAddToDo={handleOnAddToDo} />
+        <ToDoList toDos={filteredToDos} />
+      </View>
+      <View style={{ flex: 0.2, flexDirection: "row" }}>
+        <Button title="Remove Completed" onPress={handleOnRemoveCompleted} />
+        <Button title="All" onPress={() => setToDosFilter("all")} />
+        <Button title="Completed" onPress={() => setToDosFilter("completed")} />
+        <Button
+          title="Incomplete"
+          onPress={() => setToDosFilter("incomplete")}
+        />
+      </View>
+    </View>
   );
 }

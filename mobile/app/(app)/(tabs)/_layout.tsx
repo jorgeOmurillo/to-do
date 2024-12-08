@@ -7,7 +7,6 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { useSession } from "@/context";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -30,7 +29,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "TODO APP",
+          headerTitleAlign: "left",
+          headerTintColor: Colors[colorScheme ?? "light"].text,
+          headerStyle: { backgroundColor: "#9395D3" },
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
           ),
