@@ -17,6 +17,7 @@ function ToDoList(props: Props) {
   return (
     <FlatList
       data={props.toDos}
+      showsVerticalScrollIndicator={false}
       keyExtractor={(item) => `${item._id}`}
       renderItem={({ item }) => <ToDoItem item={item} />}
     />

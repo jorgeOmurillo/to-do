@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { Text, TextInput, StyleSheet, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Ionicons } from "@expo/vector-icons";
+
 import { useTodos } from "@/context/todoContext";
 
 type ToDo = {
@@ -21,11 +29,11 @@ function ToDoItem(props: Props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.toDoItemContainer}>
-        {editingId === props.item._id ? (
+      <View style={styles.textContainer}>
+        {/* editingId === props.item._id ? (
           <TextInput
             numberOfLines={1}
-            style={styles.textInput}
+            style={styles.title}
             value={editedText}
             onChangeText={setEditedText}
             autoCorrect={false}
@@ -41,8 +49,34 @@ function ToDoItem(props: Props) {
           >
             {props.item.title}
           </Text>
-        )}
-        <View style={styles.toDoButtons}>
+        )*/}
+        <Text style={styles.title}>{props.item.title}</Text>
+        <Text style={styles.subtitle}>{props.item.description}</Text>
+      </View>
+      <View style={styles.actions}>
+        <TouchableOpacity
+          onPress={() => {
+            () => {
+              editToDo(props.item._id, { title: editedText });
+              setEditedText("");
+              setEditingId(null);
+            };
+          }}
+        >
+          <Ionicons name="pencil-outline" size={20} color="#9286F3" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => removeToDo(props.item._id)}>
+          <Ionicons name="trash-outline" size={20} color="#9286F3" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            editToDo(props.item._id, { completed: !props.item.completed });
+          }}
+        >
+          <Ionicons name="checkmark-circle-outline" size={20} color="#9286F3" />
+        </TouchableOpacity>
+
+        {/*<View style={styles.actions}>
           <FontAwesome.Button
             name="trash"
             backgroundColor="black"
@@ -79,7 +113,7 @@ function ToDoItem(props: Props) {
           >
             {"\u2713"}
           </Text>
-        </View>
+        </View>*/}
       </View>
     </View>
   );
@@ -88,28 +122,35 @@ function ToDoItem(props: Props) {
 export { ToDoItem };
 
 const styles = StyleSheet.create({
-  container: {},
-  toDoItemContainer: {
+  container: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    margin: 5,
-    backgroundColor: "white",
-    borderColor: "white",
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 8,
-    shadowColor: "grey",
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1.0,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 15,
+    margin: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
   },
-  textInput: {
+  textContainer: {
     flex: 1,
-    borderColor: "gray",
-    paddingRight: 10,
   },
-  toDoButtons: {
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#6D65B4",
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#9C9ABA",
+  },
+  actions: {
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "space-between",
+    width: 90,
   },
 });
