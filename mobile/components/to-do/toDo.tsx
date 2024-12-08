@@ -3,6 +3,7 @@ import { Alert, Button, View } from "react-native";
 import { ToDoInput } from "@/components/to-do/ToDoInput";
 import { ToDoList } from "@/components/to-do/ToDoList";
 import { useTodos } from "@/context/todoContext";
+import { ToDoAdd } from "./toDoAdd";
 
 type ToDo = {
   _id: string;
@@ -53,7 +54,7 @@ export default function ToDo() {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <ToDoInput onAddToDo={handleOnAddToDo} />
+        {/*<ToDoInput onAddToDo={handleOnAddToDo} />*/}
         <ToDoList toDos={filteredToDos} />
       </View>
       <View style={{ flex: 0.2, flexDirection: "row" }}>
@@ -65,6 +66,7 @@ export default function ToDo() {
           onPress={() => setToDosFilter("incomplete")}
         />
       </View>
+      <ToDoAdd onPress={() => {}} />
     </View>
   );
 }

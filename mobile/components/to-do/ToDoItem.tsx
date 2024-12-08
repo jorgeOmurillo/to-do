@@ -30,26 +30,6 @@ function ToDoItem(props: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        {/* editingId === props.item._id ? (
-          <TextInput
-            numberOfLines={1}
-            style={styles.title}
-            value={editedText}
-            onChangeText={setEditedText}
-            autoCorrect={false}
-          />
-        ) : (
-          <Text
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={{
-              flex: 1,
-              paddingRight: 10,
-            }}
-          >
-            {props.item.title}
-          </Text>
-        )*/}
         <Text style={styles.title}>{props.item.title}</Text>
         <Text style={styles.subtitle}>{props.item.description}</Text>
       </View>
@@ -75,45 +55,6 @@ function ToDoItem(props: Props) {
         >
           <Ionicons name="checkmark-circle-outline" size={20} color="#9286F3" />
         </TouchableOpacity>
-
-        {/*<View style={styles.actions}>
-          <FontAwesome.Button
-            name="trash"
-            backgroundColor="black"
-            size={20}
-            onPress={() => removeToDo(props.item._id)}
-          />
-
-          {editingId === props.item._id ? (
-            <Text
-              ellipsizeMode="clip"
-              numberOfLines={1}
-              onPress={() => {
-                editToDo(props.item._id, { title: editedText });
-                setEditedText("");
-                setEditingId(null);
-              }}
-            >
-              Save
-            </Text>
-          ) : (
-            <Text
-              onPress={() => {
-                setEditingId(props.item._id);
-                setEditedText(props.item.title);
-              }}
-            >
-              Edit
-            </Text>
-          )}
-          <Text
-            onPress={() => {
-              editToDo(props.item._id, { completed: !props.item.completed });
-            }}
-          >
-            {"\u2713"}
-          </Text>
-        </View>*/}
       </View>
     </View>
   );
@@ -129,7 +70,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 8,
     padding: 15,
-    margin: 10,
+    marginHorizontal: 10,
+    marginTop: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
