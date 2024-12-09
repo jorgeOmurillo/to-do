@@ -36,6 +36,14 @@ export default function AppLayout() {
             headerTitleAlign: "left",
           }}
         />
+        <Stack.Screen
+          name="(todo)/toDoEdit"
+          options={{
+            headerShown: true,
+            title: "Edit ToDo",
+            headerTitleAlign: "left",
+          }}
+        />
       </Stack>
     </ToDoProvider>
   );

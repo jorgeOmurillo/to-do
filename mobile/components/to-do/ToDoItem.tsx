@@ -1,15 +1,8 @@
-import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { useTodos } from "@/context/todoContext";
+import { router } from "expo-router";
 
 type ToDo = {
   _id: string;
@@ -23,8 +16,6 @@ type Props = {
 };
 
 function ToDoItem(props: Props) {
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editedText, setEditedText] = useState("");
   const { editToDo, removeToDo } = useTodos();
 
   return (
@@ -39,13 +30,12 @@ function ToDoItem(props: Props) {
       </View>
       <View style={styles.actions}>
         <TouchableOpacity
-          onPress={() => {
-            () => {
-              editToDo(props.item._id, { title: editedText });
-              setEditedText("");
-              setEditingId(null);
-            };
-          }}
+          onPress={() =>
+            router.push({
+              pathname: "/(app)/(todo)/toDoEdit",
+              params: { id: props.item._id },
+            })
+          }
         >
           <Ionicons name="pencil-outline" size={20} color="#9286F3" />
         </TouchableOpacity>
@@ -57,7 +47,15 @@ function ToDoItem(props: Props) {
             editToDo(props.item._id, { completed: !props.item.completed });
           }}
         >
-          <Ionicons name="checkmark-circle-outline" size={20} color="#9286F3" />
+          <Ionicons
+            name={
+              props.item.completed
+                ? "checkmark-done-circle"
+                : "checkmark-circle-outline"
+            }
+            size={20}
+            color={"#9286F3"}
+          />
         </TouchableOpacity>
       </View>
     </View>
