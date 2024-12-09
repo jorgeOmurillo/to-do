@@ -6,6 +6,12 @@ export async function getToDos() {
   return await fetchWithAuth("/todos");
 }
 
+export async function getToDoById(id: string) {
+  return await fetchWithAuth(`/todo/${id}`, {
+    method: "GET",
+  });
+}
+
 export async function createToDo(toDoDetails: {
   title: string;
   description?: string;

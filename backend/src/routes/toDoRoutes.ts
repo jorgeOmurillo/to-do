@@ -30,6 +30,18 @@ router.get("/todos", authMiddleware, async (req, res) => {
   }
 });
 
+// Retrieve a toDo
+router.get("/todo/:id", authMiddleware, async (req: any, res: any) => {
+  const { id } = req.params;
+
+  try {
+    const toDo = await ToDo.findById(id);
+    res.json(toDo);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieiving To-Do", error });
+  }
+});
+
 // Update a toDo
 router.put("/todo/:id", authMiddleware, async (req: any, res: any) => {
   const { id } = req.params;
