@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { deleteItem, getValueFor, saveItem } from "@/utils/secureStorage";
+import { fetchWithAuth } from "@/api/fetchWithAuth";
 
 const AuthContext = createContext<{
   logIn: ({
@@ -72,16 +73,16 @@ export function SessionProvider({ children }: PropsWithChildren) {
   }) => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:3000/api/auth/login", {
+      const response = await fetchWithAuth("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        await saveItem("token", data.token);
-        setToken(data.token);
+      if (response.token) {
+        const token = response.token;
+        await saveItem("token", token);
+        setToken(token);
       }
       setIsLoading(false);
     } catch (error) {
@@ -98,16 +99,16 @@ export function SessionProvider({ children }: PropsWithChildren) {
   }) => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetchWithAuth("/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        await saveItem("token", data.token);
-        setToken(data.token);
+      if (response.token) {
+        const token = response.token;
+        await saveItem("token", token);
+        setToken(token);
       }
       setIsLoading(false);
     } catch (error) {
