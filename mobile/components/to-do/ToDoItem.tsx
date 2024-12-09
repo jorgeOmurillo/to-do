@@ -30,8 +30,12 @@ function ToDoItem(props: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{props.item.title}</Text>
-        <Text style={styles.subtitle}>{props.item.description}</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
+          {props.item.title}
+        </Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.subtitle}>
+          {props.item.description}
+        </Text>
       </View>
       <View style={styles.actions}>
         <TouchableOpacity
