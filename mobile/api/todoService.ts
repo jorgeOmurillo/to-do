@@ -6,11 +6,14 @@ export async function getToDos() {
   return await fetchWithAuth("/todos");
 }
 
-export async function createToDo(title: string) {
+export async function createToDo(toDoDetails: {
+  title: string;
+  description?: string;
+}) {
   return await fetchWithAuth("/todos", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title, description: "text", completed: false }),
+    body: JSON.stringify({ ...toDoDetails, completed: false }),
   });
 }
 

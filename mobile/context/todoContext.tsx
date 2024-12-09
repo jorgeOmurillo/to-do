@@ -17,7 +17,13 @@ export type ToDo = {
 type ToDoContextType = {
   toDos: ToDo[];
   fetchToDos: () => Promise<void>;
-  addToDo: (title: string) => Promise<void>;
+  addToDo: ({
+    title,
+    description,
+  }: {
+    title: string;
+    description?: string;
+  }) => Promise<void>;
   editToDo: (id: string, updates: Partial<ToDo>) => Promise<void>;
   removeToDo: (id: string) => Promise<void>;
   removeCompletedToDos: () => Promise<void>;
@@ -39,9 +45,12 @@ export const ToDoProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const addToDo = async (title: string) => {
+  const addToDo = async (toDoDetails: {
+    title: string;
+    description?: string;
+  }) => {
     try {
-      const newToDo = await createToDo(title);
+      const newToDo = await createToDo(toDoDetails);
       setToDos((prev) => [...prev, newToDo]);
     } catch (error) {
       console.error("Error adding to-do:", error);
