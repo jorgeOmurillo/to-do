@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import { Redirect, Slot } from "expo-router";
+import { Redirect, Slot, Stack } from "expo-router";
 import { useSession } from "@/context";
 import { ToDoProvider } from "@/context/todoContext";
 
@@ -16,7 +16,12 @@ export default function AppLayout() {
 
   return (
     <ToDoProvider>
-      <Slot />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="(todo)/toDoAdd"
+          options={{ headerShown: true, title: "Add ToDo" }}
+        />
+      </Stack>
     </ToDoProvider>
   );
 }
