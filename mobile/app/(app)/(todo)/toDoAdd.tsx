@@ -40,14 +40,14 @@ export default function ToDoAddScreen() {
           placeholder="Enter ToDo title"
           placeholderTextColor="#B0B0C3"
         />
-        <Text style={styles.label}>Detail</Text>
+        <Text style={styles.label}>Description</Text>
         <TextInput
           style={styles.textInput}
           value={description}
           autoCorrect={false}
           autoCapitalize="none"
           onChangeText={setDescription}
-          placeholder="Enter ToDo details"
+          placeholder="Enter ToDo description"
           placeholderTextColor="#B0B0C3"
         />
       </View>
