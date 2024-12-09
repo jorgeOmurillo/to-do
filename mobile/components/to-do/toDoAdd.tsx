@@ -2,9 +2,13 @@ import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export const ToDoAdd = ({ onPress }) => {
+type Props = {
+  onPress: () => void;
+};
+
+export const ToDoAdd = (props: Props) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={styles.button} onPress={props.onPress}>
       <Ionicons name="add" size={24} color="#fff" />
     </TouchableOpacity>
   );

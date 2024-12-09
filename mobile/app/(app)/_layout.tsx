@@ -1,10 +1,14 @@
 import { Text } from "react-native";
-import { Redirect, Slot, Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
+
 import { useSession } from "@/context";
 import { ToDoProvider } from "@/context/todoContext";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function AppLayout() {
   const { isLoading, token } = useSession();
+  const colorScheme = useColorScheme();
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -16,10 +20,21 @@ export default function AppLayout() {
 
   return (
     <ToDoProvider>
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          headerBackTitle: "Home",
+          headerTintColor: Colors[colorScheme ?? "light"].text,
+          headerStyle: { backgroundColor: "#9395D3" },
+        }}
+      >
         <Stack.Screen
           name="(todo)/toDoAdd"
-          options={{ headerShown: true, title: "Add ToDo" }}
+          options={{
+            headerShown: true,
+            title: "Add ToDo",
+            headerTitleAlign: "left",
+          }}
         />
       </Stack>
     </ToDoProvider>

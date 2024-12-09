@@ -1,41 +1,20 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, View } from "react-native";
-
-import { useTodos } from "@/context/todoContext";
-import { ToDoInput } from "@/components/to-do/ToDoInput";
-import { ToDoList } from "@/components/to-do/ToDoList";
-import { ToDoAdd } from "@/components/to-do/toDoAdd";
+import { Button, View } from "react-native";
 import { router } from "expo-router";
 
-type ToDo = {
-  _id: string;
-  description: string;
-  title: string;
-  completed: boolean;
-};
+import { useTodos } from "@/context/todoContext";
+import { ToDoList } from "@/components/to-do/ToDoList";
+import { ToDoAdd } from "@/components/to-do/toDoAdd";
 
 type ToDosFilter = "all" | "completed" | "incomplete";
 
 export default function HomeScreen() {
-  const { addToDo, fetchToDos, removeCompletedToDos, toDos } = useTodos();
+  const { fetchToDos, removeCompletedToDos, toDos } = useTodos();
   const [toDosFilter, setToDosFilter] = useState<ToDosFilter>("all");
 
   useEffect(() => {
     fetchToDos();
   }, []);
-
-  const handleOnAddToDo = (toDoInput: string) => {
-    const duplicateToDo = toDos.some(
-      (value) => toDoInput.trim() === value.title
-    );
-
-    if (duplicateToDo) {
-      Alert.alert("This To-Do item already exists.");
-      return;
-    }
-
-    addToDo(toDoInput);
-  };
 
   const handleOnRemoveCompleted = () => {
     removeCompletedToDos();
@@ -56,7 +35,6 @@ export default function HomeScreen() {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        {/*<ToDoInput onAddToDo={handleOnAddToDo} />*/}
         <ToDoList toDos={filteredToDos} />
       </View>
       <View style={{ flex: 0.2, flexDirection: "row" }}>
