@@ -7,11 +7,20 @@ import { useSession } from "@/context";
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { register } = useSession();
 
-  const handleRegister = () => {
-    register({ username, password });
-    router.replace("/(app)/(tabs)");
+  const handleRegister = async () => {
+    try {
+      await register({ username, password });
+      router.replace("/(app)/(tabs)");
+    } catch (error) {
+      console.error("Registration error: ", error);
+
+      const errorMessage =
+        (error as Error).message || "An unknown error occurred.";
+      setError(errorMessage);
+    }
   };
 
   return (
@@ -32,6 +41,7 @@ export default function Register() {
         onChangeText={setPassword}
       />
       <Button title="Register" onPress={handleRegister} />
+      {error.length > 0 && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
@@ -54,5 +64,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
+  },
+  errorText: {
+    fontSize: 16,
+    marginTop: 20,
+    color: "red",
   },
 });

@@ -6,24 +6,15 @@ import {
   useState,
 } from "react";
 import { deleteItem, getValueFor, saveItem } from "@/utils/secureStorage";
-import { fetchWithAuth } from "@/api/fetchWithAuth";
+
+type LoginDetails = {
+  username: string;
+  password: string;
+};
 
 const AuthContext = createContext<{
-  logIn: ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => void;
-  register: ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => void;
-
+  logIn: ({ username, password }: LoginDetails) => Promise<void> | null;
+  register: ({ username, password }: LoginDetails) => Promise<void> | null;
   logOut: () => void;
   token: string | null;
   isLoading: boolean;
@@ -64,13 +55,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
     checkToken();
   }, []);
 
-  const handleLogin = async ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => {
+  const handleLogin = async ({ username, password }: LoginDetails) => {
     try {
       setIsLoading(true);
       const response = await fetch(
@@ -83,7 +68,12 @@ export function SessionProvider({ children }: PropsWithChildren) {
       );
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        const errorDetails = await response.json();
+        throw new Error(
+          `Request failed: ${response.status} - ${
+            errorDetails.message || "Unknown error"
+          }`
+        );
       }
 
       const data = await response.json();
@@ -94,16 +84,11 @@ export function SessionProvider({ children }: PropsWithChildren) {
       setIsLoading(false);
     } catch (error) {
       console.error("Login error:", error);
+      throw error;
     }
   };
 
-  const handleRegister = async ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => {
+  const handleRegister = async ({ username, password }: LoginDetails) => {
     try {
       setIsLoading(true);
       const response = await fetch(
@@ -116,7 +101,12 @@ export function SessionProvider({ children }: PropsWithChildren) {
       );
 
       if (!response.ok) {
-        throw new Error("Registration failed");
+        const errorDetails = await response.json();
+        throw new Error(
+          `Request failed: ${response.status} - ${
+            errorDetails.message || "Unknown error"
+          }`
+        );
       }
 
       const data = await response.json();
@@ -127,6 +117,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       setIsLoading(false);
     } catch (error) {
       console.error("Registration error:", error);
+      throw error;
     }
   };
 

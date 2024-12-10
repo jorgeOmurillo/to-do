@@ -33,7 +33,12 @@ export async function fetchWithAuth(
     }
 
     if (!response.ok) {
-      throw new Error("Request failed");
+      const errorDetails = await response.json();
+      throw new Error(
+        `Request failed: ${response.status} - ${
+          errorDetails.message || "Unknown error"
+        }`
+      );
     }
 
     return await response.json();

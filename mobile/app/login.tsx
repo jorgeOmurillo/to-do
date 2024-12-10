@@ -6,14 +6,19 @@ import { useSession } from "@/context";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { logIn } = useSession();
 
   const handleLogin = async () => {
     try {
-      logIn({ username, password });
+      await logIn({ username, password });
       router.replace("/(app)/(tabs)");
     } catch (error) {
       console.error("Login error: ", error);
+
+      const errorMessage =
+        (error as Error).message || "An unknown error occurred.";
+      setError(errorMessage);
     }
   };
 
@@ -36,6 +41,7 @@ export default function Login() {
       />
       <Button title="Login" onPress={handleLogin} />
       <Link href="/register">Register</Link>
+      {error.length > 0 && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
@@ -58,5 +64,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
+  },
+  errorText: {
+    fontSize: 16,
+    marginTop: 20,
+    color: "red",
   },
 });
