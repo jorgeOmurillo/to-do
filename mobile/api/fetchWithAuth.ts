@@ -8,7 +8,7 @@ export async function fetchWithAuth(
   retry = true
 ): Promise<any> {
   try {
-    const token = await getValueFor("token");
+    const token = await getValueFor("accessToken");
 
     const headers = {
       ...options.headers,
@@ -21,26 +21,22 @@ export async function fetchWithAuth(
       headers,
     });
 
-    if (response.ok) {
-      return await response.json();
-    }
-
     if (response.status === 401 && retry) {
       console.warn("Token expired. Attempting refresh...");
       const newToken = await refreshAuthToken();
-
-      if (newToken) {
-        await saveItem("token", newToken);
-        return await fetchWithAuth(endpoint, options, false);
+      if (!newToken) {
+        throw new Error("Session expired");
       }
+
+      await saveItem("accessToken", newToken);
+      return await fetchWithAuth(endpoint, options, false);
     }
 
-    const errorDetails = await response.json();
-    throw new Error(
-      `Request failed: ${response.status} - ${
-        errorDetails.message || "Unknown error"
-      }`
-    );
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+
+    return await response.json();
   } catch (error) {
     console.error("fetchWithAuth error:", error);
     throw error;
@@ -49,10 +45,15 @@ export async function fetchWithAuth(
 
 async function refreshAuthToken(): Promise<string | null> {
   try {
-    const response = await fetch(`${API_URL}/auth/refresh`, {
+    const refreshToken = await getValueFor("refreshToken");
+    if (!refreshToken) {
+      throw new Error("No refresh token available");
+    }
+
+    const response = await fetch(`${API_URL}/auth/refresh-token`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken: await getValueFor("refreshToken") }),
+      body: JSON.stringify({ refreshToken }),
     });
 
     if (!response.ok) {
@@ -60,8 +61,9 @@ async function refreshAuthToken(): Promise<string | null> {
       return null;
     }
 
-    const data = await response.json();
-    return data.newToken;
+    const { accessToken } = await response.json();
+    await saveItem("accessToken", accessToken);
+    return accessToken;
   } catch (error) {
     console.error("Error refreshing token:", error);
     return null;

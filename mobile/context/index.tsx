@@ -54,7 +54,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     async function checkToken() {
       setIsLoading(true);
-      const token = await getValueFor("token");
+      const token = await getValueFor("accessToken");
       if (token) {
         setToken(token);
       }
@@ -73,17 +73,24 @@ export function SessionProvider({ children }: PropsWithChildren) {
   }) => {
     try {
       setIsLoading(true);
-      const response = await fetchWithAuth("/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
-      if (response.token) {
-        const token = response.token;
-        await saveItem("token", token);
-        setToken(token);
+      if (!response.ok) {
+        throw new Error("Login failed");
       }
+
+      const data = await response.json();
+
+      await saveItem("accessToken", data.accessToken);
+      await saveItem("refreshToken", data.refreshToken);
+      setToken(data.accessToken);
       setIsLoading(false);
     } catch (error) {
       console.error("Login error:", error);
@@ -99,17 +106,24 @@ export function SessionProvider({ children }: PropsWithChildren) {
   }) => {
     try {
       setIsLoading(true);
-      const response = await fetchWithAuth("/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
-      if (response.token) {
-        const token = response.token;
-        await saveItem("token", token);
-        setToken(token);
+      if (!response.ok) {
+        throw new Error("Registration failed");
       }
+
+      const data = await response.json();
+
+      await saveItem("accessToken", data.accessToken);
+      await saveItem("refreshToken", data.refreshToken);
+      setToken(data.accessToken);
       setIsLoading(false);
     } catch (error) {
       console.error("Registration error:", error);
@@ -119,11 +133,12 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const handleLogout = async () => {
     try {
       setIsLoading(true);
-      await deleteItem("token");
+      await deleteItem("accessToken");
+      await deleteItem("refreshToken");
       setToken(null);
       setIsLoading(false);
     } catch (error) {
-      console.log("Token deletion error:", error);
+      console.error("Token deletion error:", error);
     }
   };
 

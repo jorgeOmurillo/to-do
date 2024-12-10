@@ -20,8 +20,7 @@ const authMiddleware = (
     (req as any).user = decoded;
     next();
   } catch (error) {
-    res.status(403).json({ message: "Invalid token" });
-    return;
+    res.status(401).json({ message: "Invalid token" });
   }
 };
 
