@@ -33,20 +33,18 @@ export default function HomeScreen() {
   });
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        <ToDoList toDos={filteredToDos} />
-      </View>
-      <View style={{ flex: 0.2, flexDirection: "row" }}>
-        <Button title="Remove Completed" onPress={handleOnRemoveCompleted} />
+    <>
+      <View style={{ justifyContent: "space-around", flexDirection: "row" }}>
         <Button title="All" onPress={() => setToDosFilter("all")} />
         <Button title="Completed" onPress={() => setToDosFilter("completed")} />
         <Button
           title="Incomplete"
           onPress={() => setToDosFilter("incomplete")}
         />
+        <Button title="Remove Completed" onPress={handleOnRemoveCompleted} />
       </View>
+      <ToDoList toDos={filteredToDos} />
       <ToDoAdd onPress={() => router.navigate("/(app)/(todo)/toDoAdd")} />
-    </View>
+    </>
   );
 }

@@ -20,6 +20,8 @@ function ToDoList(props: Props) {
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => `${item._id}`}
       renderItem={({ item }) => <ToDoItem item={item} />}
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: "25%" }}
     />
   );
 }
