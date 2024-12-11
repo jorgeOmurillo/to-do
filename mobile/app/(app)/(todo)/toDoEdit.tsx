@@ -7,10 +7,9 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
 
 import { useTodos } from "@/context/todoContext";
-import { router } from "expo-router";
-import { useLocalSearchParams } from "expo-router";
 import { getToDoById } from "@/api/todoService";
 
 export default function ToDoEditScreen() {

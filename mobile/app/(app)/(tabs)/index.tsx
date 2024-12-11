@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 
 import { useTodos } from "@/context/todoContext";
 import { ToDoList } from "@/components/to-do/ToDoList";
 import { ToDoAdd } from "@/components/to-do/toDoAdd";
+import { ToDoFilterButton } from "@/components/to-do/toDoFilterButton";
 
 type ToDosFilter = "all" | "completed" | "incomplete";
 
@@ -34,17 +35,39 @@ export default function HomeScreen() {
 
   return (
     <>
-      <View style={{ justifyContent: "space-around", flexDirection: "row" }}>
-        <Button title="All" onPress={() => setToDosFilter("all")} />
-        <Button title="Completed" onPress={() => setToDosFilter("completed")} />
-        <Button
+      <View style={styles.buttonsContainer}>
+        <ToDoFilterButton
+          title="All"
+          isActive={toDosFilter === "all"}
+          onPress={() => setToDosFilter("all")}
+        />
+        <ToDoFilterButton
+          title="Completed"
+          isActive={toDosFilter === "completed"}
+          onPress={() => setToDosFilter("completed")}
+        />
+        <ToDoFilterButton
           title="Incomplete"
+          isActive={toDosFilter === "incomplete"}
           onPress={() => setToDosFilter("incomplete")}
         />
-        <Button title="Remove Completed" onPress={handleOnRemoveCompleted} />
+        <ToDoFilterButton
+          title="Remove Completed"
+          onPress={handleOnRemoveCompleted}
+        />
       </View>
       <ToDoList toDos={filteredToDos} />
       <ToDoAdd onPress={() => router.navigate("/(app)/(todo)/toDoAdd")} />
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: "#f5f5f5",
+  },
+});
