@@ -3,6 +3,20 @@
 A To-Do App that features a simple and secure login system using authorization (session-based) JWT tokens to make sure only authorized users can access their data. The app works on iOS, Android, and Web, so you can use it on your phone, tablet, or computer. It connects to a local server, and can store your tasks and keeps everything safe and up to date. It's designed to be easy to use, fast, and secure!
 Built with Expo React Native, Express, and MongoDB.
 
+## Demo Video
+
+### iOS Simulator:
+
+[![Watch the video](assets/ios_image.png)](assets/ios.mp4)
+
+### Android Emulator:
+
+[![Watch the video](assets/android_image.png)](assets/android.mp4)
+
+### Web browser:
+
+[![Watch the video](assets/web_image.png)](assets/web.mp4)
+
 ## Project Setup
 
 This guide explains how to set up and run both the backend and the mobile projects in this repository.
@@ -18,7 +32,7 @@ This guide explains how to set up and run both the backend and the mobile projec
 
 2. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone git@github.com:jorgeOmurillo/to-do.git
    ```
 3. Create a .env file in the root of the backend project with the following keys:
 
