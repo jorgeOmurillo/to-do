@@ -1,6 +1,7 @@
 # To-Do-App
 
-A To-Do App that features a simple and secure login system using authorization (session-based) JWT tokens to make sure only authorized users can access their data. The app works on iOS, Android, and Web, so you can use it on your phone, tablet, or computer. It connects to an Express backend server and MongoDB, and can store your tasks and keeps everything safe and up to date. It's designed to be easy to use, fast, and secure!
+A To-Do App that features a simple and secure login system using authorization (session-based) JWT tokens to make sure only authorized users can access their data. The app works on iOS, Android, and Web, so you can use it on your phone, tablet, or computer. It connects to a local server, and can store your tasks and keeps everything safe and up to date. It's designed to be easy to use, fast, and secure!
+Built with Expo React Native, Express, and MongoDB.
 
 ## Project Setup
 
