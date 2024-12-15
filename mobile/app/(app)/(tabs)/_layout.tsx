@@ -31,6 +31,7 @@ export default function TabLayout() {
         options={{
           title: "TODO APP",
           headerTitleAlign: "left",
+          tabBarLabel: "Home",
           headerTintColor: Colors[colorScheme ?? "light"].text,
           headerStyle: { backgroundColor: "#9395D3" },
           tabBarIcon: ({ color }) => (
