@@ -6,16 +6,15 @@ Built with Expo React Native, Express, and MongoDB.
 ## Demo Video
 
 ### iOS Simulator:
-
-[![Watch the video](assets/ios_image.png)](assets/ios.mp4)
+[![Watch the video](assets/ios_image.png)](https://github.com/user-attachments/assets/312cc1b3-3c99-4d2b-9fb4-e6c44c52acb0)
 
 ### Android Emulator:
 
-[![Watch the video](assets/android_image.png)](assets/android.mp4)
+[![Watch the video](assets/android_image.png)](https://github.com/user-attachments/assets/6665960d-8b1c-4850-8264-7d7960226760)
 
 ### Web browser:
 
-[![Watch the video](assets/web_image.png)](assets/web.mp4)
+[![Watch the video](assets/web_image.png)](https://github.com/user-attachments/assets/b6a11ca7-8872-4cc9-84f0-8dc3de169d44)
 
 ## Project Setup
 
