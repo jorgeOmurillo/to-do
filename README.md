@@ -122,15 +122,15 @@ Backend is not connecting to MongoDB:
 Mobile app cannot connect to the backend:
 
 - Ensure the backend is running on the same network as the mobile device.
-- For physical devices, replace localhost in EXPO_PUBLIC_API_URL with your computer’s IP address (e.g., http://192.168.x.x:5000).
+- For physical devices, replace localhost in EXPO_PUBLIC_API_URL with your computer’s IP address (e.g., http://192.168.x.x:3000).
 
 Expo development server not starting:
 
 - Clear the Expo cache: `expo start -c`
 
-Directory Structure
+## Directory Structure
 
-Backend
+### Backend
 
 ```
 
@@ -145,7 +145,7 @@ Backend
 
 ```
 
-Mobile
+### Mobile
 
 ```
 
