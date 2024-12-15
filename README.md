@@ -1,6 +1,27 @@
-# To-Do-App
+<p align="center">
+<kbd>
+  <img style="width:200px; height:100px; border-radius:20%;" class="rounded-image" src="https://img.shields.io/badge/Expo-000020?logo=expo&logoColor=fff" alt="logo" height="150"/></kbd>
+</p>
 
-A To-Do App that features a simple and secure login system using authorization (session-based) JWT tokens to make sure only authorized users can access their data. The app works on iOS, Android, and Web, so you can use it on your phone, tablet, or computer. It connects to a local server, and can store your tasks and keeps everything safe and up to date. It's designed to be easy to use, fast, and secure!
+<h2 align="center">
+    To-Do-App
+</h2>
+
+<p align="center">
+
+</p>
+
+<div align="center">
+
+![Platform - iOS](https://img.shields.io/badge/platform-iOS-blue.svg)
+![Platform - iOS](https://img.shields.io/badge/platform-android-red.svg)
+![Platform - Web](https://img.shields.io/badge/Google%20Chrome-4285F4?logo=GoogleChrome&logoColor=white)![Platform - Web](https://img.shields.io/badge/Firefox-FF7139?logo=Firefox&logoColor=white)
+
+</div>
+
+# What is it?
+
+A To-Do-App that features a simple and secure login system using authorization (session-based) JWT tokens to make sure only authorized users can access their data. The app works on iOS, Android, and Web, so you can use it on your phone, tablet, or computer. It connects to a local server, and can store your tasks and keeps everything safe and up to date. It's designed to be easy to use, fast, and secure!
 Built with Expo React Native, Express, and MongoDB.
 
 ## Demo Video
