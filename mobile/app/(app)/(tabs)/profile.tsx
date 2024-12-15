@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -8,7 +8,7 @@ import { useSession } from "@/context";
 export default function TabTwoScreen() {
   const { logOut } = useSession();
 
-  const handleLogout = async () => {
+  const handleOnLogoutPress = async () => {
     logOut();
     router.replace("/login");
   };
@@ -25,8 +25,9 @@ export default function TabTwoScreen() {
         />
       }
     >
-      <Text>Log</Text>
-      <Button title="Logout" onPress={handleLogout} />
+      <TouchableOpacity style={styles.button} onPress={handleOnLogoutPress}>
+        <Text style={styles.buttonText}>Logout</Text>
+      </TouchableOpacity>
     </ParallaxScrollView>
   );
 }
@@ -37,6 +38,16 @@ const styles = StyleSheet.create({
     bottom: -90,
     left: -35,
     position: "absolute",
+  },
+  button: {
+    backgroundColor: "#7C4DFF",
+    borderRadius: 8,
+    padding: 12,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
   titleContainer: {
     flexDirection: "row",
