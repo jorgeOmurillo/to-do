@@ -67,6 +67,7 @@ export default function Register() {
           secureTextEntry={isPasswordSecure}
         />
         <TouchableOpacity
+          testID="passwordSecureButton"
           onPress={() => setIsPasswordSecure(!isPasswordSecure)}
         >
           <Ionicons
@@ -76,7 +77,11 @@ export default function Register() {
           />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleOnRegisterPress}>
+      <TouchableOpacity
+        testID="registerButton"
+        style={styles.button}
+        onPress={handleOnRegisterPress}
+      >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleOnLoginPress}>
