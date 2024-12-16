@@ -54,6 +54,7 @@ export default function Login() {
           secureTextEntry={isPasswordSecure}
         />
         <TouchableOpacity
+          testID="passwordSecureButton"
           onPress={() => setIsPasswordSecure(!isPasswordSecure)}
         >
           <Ionicons
@@ -64,7 +65,11 @@ export default function Login() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleOnLoginPress}>
+      <TouchableOpacity
+        testID="loginButton"
+        style={styles.button}
+        onPress={handleOnLoginPress}
+      >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleOnRegisterPress}>
