@@ -7,6 +7,7 @@ jest.mock("expo-secure-store");
 describe("secureStorage utilities", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    console.error = jest.fn();
   });
 
   describe("on web platform", () => {
