@@ -8,7 +8,11 @@ type Props = {
 
 export const ToDoAdd = (props: Props) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={props.onPress}>
+    <TouchableOpacity
+      testID="toDoAddButton"
+      style={styles.button}
+      onPress={props.onPress}
+    >
       <Ionicons name="add" size={24} color="#fff" />
     </TouchableOpacity>
   );
